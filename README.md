@@ -1,5 +1,5 @@
 # trump
-##做的修改
+## 做的修改
 
 1：main.js中设置Vue.prototype.chartInstance = null，  
 
