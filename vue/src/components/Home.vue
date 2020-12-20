@@ -25,7 +25,6 @@ export default {
       // 初始化图表方法
       this.chartInstance = this.$echarts.init(this.$refs.main_ref, 'chalk')
       const initOption = {
-        animation: false,
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -114,7 +113,7 @@ export default {
     },
     async getData () {
       // 获取数据
-      const { data: ret } = await this.$http.get('/home')
+      const { data: ret } = await this.$http.get('home')
       this.allData = ret
       console.log(this.allData)
       this.updateChart()

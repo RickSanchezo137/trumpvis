@@ -13,8 +13,8 @@
         <!-- 主体部分 -->
         <div class="mian-box">
           <!-- 先两栏布局 -->
-          <div class="mian">
-            <div class="mian-inner">
+          <div class="box-lf">
+            <div class="mian-top">
               <div class="inner-lf">
                 <div class="theme">
                   <!-- 主题图表 -->
@@ -36,11 +36,11 @@
             </div>
           </div>
           <div class="box-rt">
-            <div class="mobule">
+            <div class="relation">
               <!-- 关键词关系图表 -->
               <Relation ref="relation"></Relation>
             </div>
-            <div class="app">
+            <div class="wordcloud">
               <!-- 词云图表 -->
               <WordCloud ref="wordcloud"></WordCloud>
             </div>
@@ -124,14 +124,14 @@ body {
   width: 100%;
   height: 100%;
 }
-.wrapper .mian-wrap .mian-box .mian {
+.wrapper .mian-wrap .mian-box .box-lf {
   // width: 890px;
   // height: 695px;
   width: 69.8%;
   height: 100%;
   float: left;
 }
-.mian-wrap .mian-box .mian .mian-inner {
+.mian-wrap .mian-box .box-lf .mian-top {
   // width: 890px;
   // height: 460px;
   width: 100%;
@@ -139,14 +139,14 @@ body {
   float: left;
   // background-color: pink;
 }
-.mian-wrap .mian-box .mian .mian-inner .inner-lf {
+.mian-wrap .mian-box .box-lf .mian-top .inner-lf {
   // width: 350px;
   width: 39%;
   height: 100%;
   float: left;
   // background-color:white;
 }
-.mian-wrap .mian-box .mian .mian-inner .inner-lf .theme {
+.mian-wrap .mian-box .box-lf .mian-top .inner-lf .theme {
   // width: 350px;
   width: 100%;
   // height: 230px;
@@ -154,7 +154,7 @@ body {
   float: left;
   // background-color: gray;
 }
-.mian-wrap .mian-box .mian .mian-inner .inner-lf .emotion {
+.mian-wrap .mian-box .box-lf .mian-top .inner-lf .emotion {
   // width: 350px;
   width: 100%;
   // height: 230px;
@@ -162,14 +162,14 @@ body {
   float: left;
   // background-color: #ff5500;
 }
-.mian-wrap .mian-box .mian .mian-inner .inner-cer {
+.mian-wrap .mian-box .box-lf .mian-top .inner-cer {
   // width: 540px;
   width: 60%;
   height: 100%;
   float: left;
   // background-color: yellow;
 }
-.mian-wrap .mian .mian-bottom {
+.mian-wrap .box-lf .mian-bottom {
   // width: 890px;
   // height: 235px;
   width: 100%;
@@ -184,7 +184,7 @@ body {
   float: left;
   // background-color: blue;
 }
-.wrapper .mian-box .box-rt .mobule {
+.wrapper .mian-box .box-rt .relation {
   // width: 386px;
   width: 100%;
   height: 350px;
@@ -192,7 +192,7 @@ body {
   float: left;
   // background-color: red;
 }
-.wrapper .mian-box .box-rt .app {
+.wrapper .mian-box .box-rt .wordcloud {
   // width: 386px;
   width: 100%;
   height: 345px;

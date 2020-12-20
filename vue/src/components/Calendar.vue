@@ -1,15 +1,18 @@
 <template>
   <div class="com-container">
     <div class="com-chart" ref="calendar_ref"></div>
+    <span class="iconfont arr-left" @click="toLeft">&#xe6ef;</span>
+    <span class="iconfont arr-right" @click="toRight">&#xe6ed;</span>
   </div>
 </template>
 
 <script>
-
 export default {
   data () {
     return {
-      allData: null
+      allData: null,
+      // 当前显示时间的区间段
+      currentRange: 0
     }
   },
   mounted () {
@@ -44,21 +47,22 @@ export default {
           {
             top: 50,
             left: 'center',
-            range: ['2019-01-01', '2019-06-30'],
+            // 必须给初始值，否则会报错
+            range: ['2009-01-01', '2009-06-30'],
             splitLine: {
               show: true,
               lineStyle: {
                 color: '#000',
-                width: 4,
+                width: 2,
                 type: 'solid'
               }
             },
             yearLabel: {
-              formatter: '{start}',
+              // formatter: '{start}',
               fontSize: 15
             },
             itemStyle: {
-              color: '#323c48',
+              color: '#fff',
               borderWidth: 1,
               borderColor: '#111'
             }
@@ -70,7 +74,7 @@ export default {
             type: 'scatter',
             coordinateSystem: 'calendar',
             itemStyle: {
-              color: '#ddb926'
+              color: '#66cccc'
             }
           },
           {
@@ -83,7 +87,7 @@ export default {
             },
             hoverAnimation: true,
             itemStyle: {
-              color: '#f4e925',
+              color: '#33cccc',
               shadowBlur: 10,
               shadowColor: '#333'
             },
@@ -94,25 +98,29 @@ export default {
       this.chartInstance.setOption(initOption)
     },
     async getData () {
-      const { data: ret } = await this.$http.get('/help/calendar', {
-        params: {
-          startTime: '2019-01-01',
-          endTime: '2019-06-30'
-        }
-      })
+      const { data: ret } = await this.$http.get('help/calendar')
       this.allData = ret
-      // console.log(this.allData)
+      console.log(this.allData)
       this.updateChart()
     },
     updateChart () {
-      const dataArr = this.allData.map(item => {
+      const yearLabelFormatter = this.allData[this.currentRange].name
+      const dateRange = this.allData[this.currentRange].range
+      const dataArr = this.allData[this.currentRange].data.map(item => {
         return [
           item.time,
           item.count
         ]
       })
-      console.log(dataArr)
       const dataOption = {
+        calendar: [
+          {
+            range: dateRange,
+            yearLabel: {
+              formatter: yearLabelFormatter
+            }
+          }
+        ],
         series: [
           {
             data: dataArr,
@@ -136,10 +144,39 @@ export default {
       const adapterOption = {}
       this.chartInstance.setOption(adapterOption)
       this.chartInstance.resize()
+    },
+    toLeft () {
+      this.currentRange--
+      if (this.currentRange < 0) {
+        this.currentRange = this.allData.length - 1
+      }
+      this.updateChart()
+    },
+    toRight () {
+      this.currentRange++
+      if (this.currentRange > this.allData.length - 1) {
+        this.currentRange = 0
+      }
+      this.updateChart()
     }
   }
 }
 </script>
 <style lang='less' scoped>
-
+.arr-left{
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer; // 移上去变小手
+  color: black
+}
+.arr-right{
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: black
+}
 </style>

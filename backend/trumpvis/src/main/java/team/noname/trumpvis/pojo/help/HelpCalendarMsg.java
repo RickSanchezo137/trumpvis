@@ -1,31 +1,33 @@
 package team.noname.trumpvis.pojo.help;
 
+import java.util.List;
+
 public class HelpCalendarMsg {
-    private String time;
-    private Integer count;
-    //private Integer influence;
+    private String name;
+    private List<String> range;
+    private List<HelpCalendarData> data;
 
-    public String getTime() {
-        return time;
+    public String getName() {
+        return name;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getCount() {
-        return count;
+    public List<String> getRange() {
+        return range;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setRange(List<String> range) {
+        this.range = range;
     }
 
-/*    public Integer getInfluence() {
-        return influence;
+    public List<HelpCalendarData> getData() {
+        return data;
     }
 
-    public void setInfluence(Integer influence) {
-        this.influence = influence;
-    }*/
+    public void setData(List<HelpCalendarData> data) {
+        this.data = data;
+    }
 }

@@ -1,12 +1,8 @@
 package team.noname.trumpvis.dao;
 
-import org.apache.ibatis.annotations.Many;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
-import team.noname.trumpvis.pojo.help.HelpCalendarMsg;
+import team.noname.trumpvis.pojo.help.HelpCalendarData;
 import team.noname.trumpvis.pojo.main.home.HomeMsg;
 import team.noname.trumpvis.pojo.main.trend.Data;
 
@@ -40,5 +36,5 @@ public interface ITweetsDao {
     @Select("select date as 'time', count(1) as 'count' from tweets " +
             "where date <= #{endTime} and date >= #{startTime} " +
             "group by date order by date;")
-    List<HelpCalendarMsg>  dataOfTweetsByDay(Date startTime, Date endTime);
+    List<HelpCalendarData>  dataOfTweetsByDay(Date startTime, Date endTime);
 }

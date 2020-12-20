@@ -1,3 +1,4 @@
+/*
 package team.noname.trumpvis.config;
 
 import org.springframework.context.annotation.Bean;
@@ -32,3 +33,4 @@ public class RedisConfig {
         return RedisCacheManager.builder(redisConnectionFactory).cacheDefaults(cacheConfiguration).build();
     }
 }
+*/

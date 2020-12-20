@@ -14,5 +14,5 @@ public interface ITweetsService {
     /**
      *  help
      */
-    String help_vis_calendar(String startTime, String endTime);
+    String help_vis_calendar();
 }

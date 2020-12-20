@@ -4,8 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/trumpvis?serverTimezone=GMT
     username: root
     password: xsfhHF981123
-  redis:
-    host: 192.168.123.221
+
 
 server:
   port: 8088

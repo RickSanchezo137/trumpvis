@@ -64,7 +64,7 @@ export default {
     async getData () {
       // await this.$http.get()
       // 对allData进行赋值
-      const { data: ret } = await this.$http.get('/trend')
+      const { data: ret } = await this.$http.get('trend')
       this.allData = ret
       console.log(this.allData)
       this.updateChart()
