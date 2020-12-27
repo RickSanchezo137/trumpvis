@@ -10,6 +10,7 @@ import $ from 'jquery'
 export default {
   data () {
     return {
+      chartInstance: null,
       allData: null
     }
   },

@@ -8,6 +8,7 @@
 export default {
   data () {
     return {
+      chartInstane: null,
       allData: null, // 从服务器中获取的所有数据
       titleFontSize: 0 // 指明标题的字体大小
     }
@@ -17,6 +18,19 @@ export default {
     this.getData()
     window.addEventListener('resize', this.screenAdapter)
     this.screenAdapter()
+    var that = this
+    this.chartInstane.on('dataZoom', function (params) {
+          let start = that.chartInstane.getOption().dataZoom[0].startValue
+          let end = that.chartInstane.getOption().dataZoom[0].endValue
+          let timeArr = that.chartInstane.getOption().xAxis[0].data
+          // console.log('start: ', timeArr[start])
+          // console.log('end: ', timeArr[end])
+          let startAndEnd = {
+            start: timeArr[start],
+            end: timeArr[end]
+          }
+          that.$emit('getStartAndEnd', startAndEnd)
+      })
   },
   destroyed () {
     window.removeEventListener('resize', this.screenAdapter)
@@ -44,7 +58,8 @@ export default {
           trigger: 'axis'
         },
         dataZoom: {
-          bottom: '5%'
+          bottom: '5%',
+          realtime: false
         },
         legend: {
           left: 20,

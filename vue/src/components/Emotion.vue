@@ -8,6 +8,7 @@
 export default {
   data () {
     return {
+      chartInstance: null,
       allData: null // 从服务器中获取的所有数据
     }
   },

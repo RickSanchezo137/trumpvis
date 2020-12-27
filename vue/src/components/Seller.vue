@@ -8,6 +8,7 @@
 export default {
   data () {
     return {
+      chartInstance: null,
       allData: null,
       currentPage: 1, // 当前页码 1
       totalPage: 0, // 总页数

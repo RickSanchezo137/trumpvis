@@ -1,7 +1,5 @@
 package team.noname.trumpvis.pojo.main.trend;
 
-import java.util.List;
-
 public class Data {
     private Integer count;
     private Integer retweets;

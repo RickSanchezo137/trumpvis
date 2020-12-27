@@ -1,6 +1,6 @@
 <template>
   <div class="com-page">
-    <trend></trend>
+    <trend @getBeginAndEnd="getMsgFromTrend"></trend>
   </div>
 </template>
 
@@ -10,7 +10,11 @@ export default {
   data () {
     return {}
   },
-  methods: {},
+  methods: {
+      getMsgFromTrend(beginAndEndArr){
+          // console.log(beginAndEndArr)
+      }
+  },
   components: {
     trend: Trend
   }

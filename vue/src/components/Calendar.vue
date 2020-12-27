@@ -10,6 +10,7 @@
 export default {
   data () {
     return {
+      chartInstance: null,
       allData: null,
       // 当前显示时间的区间段
       currentRange: 0
@@ -17,9 +18,18 @@ export default {
   },
   mounted () {
     this.initChart()
-    this.getData()
+    var that = this
+    var iter = 0
+    // setInterval(function () {
+    //     iter += 1
+    //     that.getData(iter)
+    //   }, 1000)
+    this.getData(iter)
     window.addEventListener('resize', this.screenAdapter)
     this.screenAdapter()
+    this.chartInstance.on('click', function (params) {
+      console.log(params)
+    })
   },
   destroyed () {
     window.removeEventListener('resize', this.screenAdapter)
@@ -97,22 +107,22 @@ export default {
       }
       this.chartInstance.setOption(initOption)
     },
-    async getData () {
-      const { data: ret } = await this.$http.get('help/calendar')
+    async getData (iter) {
+      const { data: ret } = await this.$http.get('calendar')
       this.allData = ret
-      console.log(this.allData)
+      this.allData[0].data[0].count += iter
       this.updateChart()
     },
     updateChart () {
       const yearLabelFormatter = this.allData[this.currentRange].name
       const dateRange = this.allData[this.currentRange].range
-      const dataArr = this.allData[this.currentRange].data.map(item => {
+      var dataArr = this.allData[this.currentRange].data.map(item => {
         return [
           item.time,
           item.count
         ]
       })
-      const dataOption = {
+      var dataOption = {
         calendar: [
           {
             range: dateRange,
@@ -161,6 +171,9 @@ export default {
     }
   }
 }
+// this.on('click', function (params) {
+//     alert(params.name);
+// })
 </script>
 <style lang='less' scoped>
 .arr-left{

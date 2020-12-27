@@ -8,6 +8,7 @@
 export default {
   data () {
     return {
+      chartInstance: null,
       allData: null
     }
   },
@@ -113,7 +114,7 @@ export default {
     },
     async getData () {
       // 获取数据
-      const { data: ret } = await this.$http.get('home')
+      const { data: ret } = await this.$http.get('tweet')
       this.allData = ret
       console.log(this.allData)
       this.updateChart()

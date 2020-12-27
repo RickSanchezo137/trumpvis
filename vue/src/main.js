@@ -9,6 +9,7 @@ import './assets/css/global.less'
 import axios from 'axios'
 
 // 请求基准路径配置
+// axios.defaults.baseURL = 'http://api/'
 axios.defaults.baseURL = '/api'
 // 挂载
 Vue.prototype.$http = axios
@@ -16,12 +17,14 @@ Vue.prototype.$http = axios
 // 挂载
 Vue.prototype.$echarts = window.echarts
 
+// 挂载两个全局图像实例对象
+Vue.prototype.$testChartA = null
+Vue.prototype.$testChartB = null
+
 Vue.config.productionTip = false
 
-Vue.prototype.chartInstance = null
-
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

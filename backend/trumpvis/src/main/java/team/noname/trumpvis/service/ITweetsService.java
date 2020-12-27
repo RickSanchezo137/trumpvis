@@ -12,7 +12,27 @@ public interface ITweetsService {
     String trend_vis(String startTime, String endTime);
 
     /**
-     *  help
+     *  help_calendar
      */
     String help_vis_calendar();
+
+    /**
+     *  help_calendar
+     */
+    String help_vis_wordcloud(String startTime, String endTime);
+
+    /**
+     *  help_theme
+     */
+    String help_vis_theme(String startTime, String endTime);
+
+    /**
+     *  help_emotion
+     */
+    String help_vis_emotion(String startTime, String endTime);
+
+    /**
+     *  help_relation
+     */
+    String help_vis_relation(String startTime, String endTime);
 }

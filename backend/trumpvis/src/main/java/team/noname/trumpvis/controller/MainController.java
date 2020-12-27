@@ -11,9 +11,9 @@ public class MainController {
     @Autowired
     ITweetsService ITweetsService;
 
-    @GetMapping("/home")
-    public String findDataOfTweets(){
-        return ITweetsService.home_vis(TweetsTimeRange.START_MONTH, TweetsTimeRange.END_MONTH);
+    @PostMapping("/home")
+    public String findDataOfTweets(String startTime, String endTime){
+        return ITweetsService.home_vis(startTime, endTime);
     }
 
     @GetMapping("/trend")

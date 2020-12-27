@@ -27,7 +27,7 @@
               </div>
               <div class="inner-cer">
                 <!-- 发推数量变化趋势图表 -->
-                <Trend ref="trend"></Trend>
+                <Trend ref="trend" @getStartAndEnd="getMsgFromTrend"></Trend>
               </div>
             </div>
             <div class="mian-bottom">
@@ -42,7 +42,7 @@
             </div>
             <div class="wordcloud">
               <!-- 词云图表 -->
-              <WordCloud ref="wordcloud"></WordCloud>
+              <WordCloud ref="wordcloud" v-bind:startAndEndArrToWordCloud="startAndEndArr"></WordCloud>
             </div>
           </div>
         </div>
@@ -59,6 +59,11 @@ import Calendar from '@/components/Calendar.vue'
 import Relation from '@/components/Relation.vue'
 import Theme from '@/components/Theme.vue'
 export default {
+  data(){
+      return{
+        startAndEndArr: {}
+      }
+  },
   components: {
     Trend,
     WordCloud,
@@ -66,7 +71,13 @@ export default {
     Calendar,
     Relation,
     Theme
-  }
+  },
+    methods: {
+        getMsgFromTrend(startAndEndArr){
+            // console.log(startAndEndArr)
+            this.startAndEndArr = startAndEndArr
+        }
+    }
 }
 </script>
 <style lang="less" scoped>

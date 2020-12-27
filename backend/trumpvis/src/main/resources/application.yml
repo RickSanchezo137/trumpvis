@@ -1,11 +1,15 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/trumpvis?serverTimezone=GMT
+    url: jdbc:mysql://localhost:3306/trumpvis?serverTimezone=GMT%2b8
     username: root
     password: xsfhHF981123
-
-
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  redis:
+    host: localhost
+    port: 6379
 server:
   port: 8088
-
