@@ -1,3 +1,4 @@
+/*
 package team.noname.trumpvis;
 
 import team.noname.trumpvis.dao.ITweetsDao;
@@ -16,4 +17,4 @@ class MyThread extends Thread{ // 实现Runnable接口，作为线程的实现�
     public void save(String startTime){
 
     }
-}
+}*/

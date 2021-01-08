@@ -58,18 +58,15 @@ public class TweetsServiceImpl implements ITweetsService {
         List<DataMsg> dataMsgs= new ArrayList<>();
         TimeMsg timeMsg = new TimeMsg();
 
-        List<Integer> count = new ArrayList<>();
         List<Integer> retweets = new ArrayList<>();
         List<Integer> favorites = new ArrayList<>();
         List<String> month = new ArrayList<>();
         for(Data data1: data){
-            count.add(data1.getCount());
             retweets.add(data1.getRetweets());
             favorites.add(data1.getFavorites());
             month.add(data1.getMonth());
         }
 
-        dataMsgs.add(new DataMsg("count", count));
         dataMsgs.add(new DataMsg("retweets", retweets));
         dataMsgs.add(new DataMsg("favorites", favorites));
         timeMsg.setMonth(month);
@@ -192,7 +189,7 @@ public class TweetsServiceImpl implements ITweetsService {
                 helpThemeMsg.setTheme(theme);
 
                 String content = helpThemeData.getContent();
-                helpThemeMsg.setCount(content.toLowerCase().split(theme).length - 1);
+                helpThemeMsg.setCount(content.split(theme).length - 1);
 
                 themeMsgs.add(helpThemeMsg);
             }
@@ -210,10 +207,9 @@ public class TweetsServiceImpl implements ITweetsService {
 
         List<HelpEmotionMsg> helpEmotionMsgs = new ArrayList<>();
 
-        List<HelpEmotionData> contents = iTweetsDao.contentOfTweetsByDay(start_time, end_time);
+        /*List<HelpEmotionData> contents = iTweetsDao.contentOfTweetsByDay(start_time, end_time);
 
         Set keys = jsonRedisTemplate.keys("emotion*");
-
         for (HelpEmotionData content: contents){
             HelpEmotionMsg helpEmotionMsg = new HelpEmotionMsg();
 
@@ -234,12 +230,29 @@ public class TweetsServiceImpl implements ITweetsService {
                 jsonRedisTemplate.opsForValue().set(key, helpEmotionMsg);
             }
             helpEmotionMsgs.add(helpEmotionMsg);
+        }*/
+
+        //
+        String time = StringDateTransferUtils.date2str_YMD(start_time);
+        Date end = StringDateTransferUtils.str2date_YMD(StringDateTransferUtils.date2str_YMD(end_time));
+        Date temp;
+
+        for(int i = 0; (temp = StringDateTransferUtils.addDayFromStr(time, i)).compareTo(end) < 0; i+=7){
+            HelpEmotionMsg helpEmotionMsg;
+            String key = "emotion" + ":" + StringDateTransferUtils.date2str_YMD(temp);
+            helpEmotionMsg = (HelpEmotionMsg) jsonRedisTemplate.opsForValue().get(key);
+            if(helpEmotionMsg != null) {
+                helpEmotionMsgs.add(helpEmotionMsg);
+            }
         }
+
+    //
+
         return JSON.toJSONString(helpEmotionMsgs);
     }
 
     @Override
-    /*@Cacheable(value = "relation")*/
+    @Cacheable(value = "relation_50")
     public String help_vis_relation(String startTime, String endTime) {
         Date start_time = StringDateTransferUtils.str2date_YM(startTime, 0);
         Date end_time = StringDateTransferUtils.str2date_YM(endTime, 1);
@@ -247,7 +260,8 @@ public class TweetsServiceImpl implements ITweetsService {
         String jsonKeywords = iTweetsService.help_vis_wordcloud(startTime, endTime);
         List<HelpWordCloudMsg> keywords = (JSON.parseArray(jsonKeywords, HelpWordCloudMsg.class));
 
-        int keywordNums = 10;
+        int keywordNums = 50;
+        keywordNums = Math.min(keywordNums, keywords.size());
         String[] keywordList = new String[keywordNums];
         for(int i = 0; i < keywordNums; i++){
             keywordList[i] = keywords.get(i).getName();
@@ -260,14 +274,30 @@ public class TweetsServiceImpl implements ITweetsService {
 
         List<HelpRelationPoint> points = new ArrayList<>();
         List<HelpRelationLink> links = new ArrayList<>();
+        List<HelpRelationCategory> categories = new ArrayList<>();
 
+        int category = 0;
+        HashMap<String, Integer> postags = new HashMap<>();
         for(int i = 0; i < keywordNums; i++) {
 
             HelpRelationPoint point = new HelpRelationPoint();
             point.setId("" + i);
             point.setName(keywordList[i]);
             point.setSymbolSize(keywords.get(i).getValue());
-            point.setCategory(0);
+
+            String postagKey = Java2Python.doPost(keywordList[i], "HTTP://127.0.0.1:5000/postag")
+                    .split(",")[1];
+            if (postags.containsKey(postagKey)) {
+                point.setCategory(postags.get(postagKey));
+            }else {
+                HelpRelationCategory helpRelationCategory = new HelpRelationCategory();
+                helpRelationCategory.setName("" + category);
+                categories.add(helpRelationCategory);
+                postags.put(postagKey, category);
+                point.setCategory(category);
+                category++;
+            }
+
             points.add(point);
 
             for(int j = 0; j < keywordNums; j++){
@@ -289,7 +319,7 @@ public class TweetsServiceImpl implements ITweetsService {
                 P_2 = P_2 / docNums;
 
                 pmi[i][j] = Math.max(Math.log((P_all) / (P_1 * P_2)), 0);
-                if(i == j){
+                if(i == j || P_1 == 0 || P_2 == 0){
                     pmi[i][j] = -1;
                 }
             }
@@ -323,6 +353,7 @@ public class TweetsServiceImpl implements ITweetsService {
         HelpRelationMsg helpRelationMsg = new HelpRelationMsg();
         helpRelationMsg.setPoints(points);
         helpRelationMsg.setLinks(links);
+        helpRelationMsg.setCategories(categories);
         return JSON.toJSONString(helpRelationMsg);
     }
 }

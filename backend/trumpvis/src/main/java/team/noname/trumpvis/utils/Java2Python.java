@@ -37,7 +37,7 @@ public class Java2Python {
             httpPost.setHeader("Content-type", "application/json");
             httpPost.setEntity(requestEntity);
             //第四步：发送HttpPost请求，获取返回值
-            res = httpClient.execute(httpPost,responseHandler); //调接口获取返回值时，必须用此方法
+            res = httpClient.execute(httpPost,responseHandler);
         } catch (IOException e) {
             e.printStackTrace();
         }

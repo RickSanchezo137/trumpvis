@@ -27,7 +27,7 @@ public interface ITweetsDao {
     /**
      *  main_trend
      */
-    @Select("select count(1) as 'count',  sum(retweets) as 'retweets', sum(favorites) as 'favorites', " +
+    @Select("select sum(retweets) as 'retweets', sum(favorites) as 'favorites', " +
             "CONCAT(year(date), '-', lpad(month(date), 2, 0)) as 'month' from tweets " +
             "where date < #{endTime} and date >= #{startTime} " +
             "group by year(date), month(date) order by date;")

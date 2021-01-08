@@ -1,18 +1,9 @@
 package team.noname.trumpvis.pojo.main.trend;
 
 public class Data {
-    private Integer count;
     private Integer retweets;
     private Integer favorites;
     public String month;
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
 
     public Integer getRetweets() {
         return retweets;

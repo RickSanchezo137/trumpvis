@@ -6,6 +6,7 @@ import team.noname.trumpvis.service.ITweetsService;
 import team.noname.trumpvis.utils.TweetsTimeRange;
 
 @RestController
+@CrossOrigin
 public class MainController {
 
     @Autowired

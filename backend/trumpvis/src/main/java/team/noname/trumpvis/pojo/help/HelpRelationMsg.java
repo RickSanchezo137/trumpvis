@@ -5,6 +5,7 @@ import java.util.List;
 public class HelpRelationMsg {
     private List<HelpRelationPoint> points;
     private List<HelpRelationLink> links;
+    private List<HelpRelationCategory> categories;
 
     public List<HelpRelationPoint> getPoints() {
         return points;
@@ -20,5 +21,13 @@ public class HelpRelationMsg {
 
     public void setLinks(List<HelpRelationLink> links) {
         this.links = links;
+    }
+
+    public List<HelpRelationCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<HelpRelationCategory> categories) {
+        this.categories = categories;
     }
 }

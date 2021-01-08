@@ -40,11 +40,25 @@ public class StringDateTransferUtils {
         String YM = sdf.format(date);
         return YM;
     }
+    public static String date2str_YMD(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String YMD = sdf.format(date);
+        return YMD;
+    }
     public static Date addMonthFromStr(String datetime, int i){
         Date date = StringDateTransferUtils.str2date_YM(datetime, 0);
         Calendar rightNow = Calendar.getInstance();
         rightNow.setTime(date);
         rightNow.add(Calendar.MONTH, i);
+        Date addedDate = rightNow.getTime();
+        return addedDate;
+    }
+
+    public static Date addDayFromStr(String datetime, int i){
+        Date date = StringDateTransferUtils.str2date_YM(datetime, 0);
+        Calendar rightNow = Calendar.getInstance();
+        rightNow.setTime(date);
+        rightNow.add(Calendar.DATE, i);
         Date addedDate = rightNow.getTime();
         return addedDate;
     }
